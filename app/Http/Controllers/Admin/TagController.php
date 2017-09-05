@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Models\Tag;
+use App\Http\Requests\TagCreateRequest;
 class TagController extends Controller
 {
+    protected $fields = [
+        'tag' => '',
+        'title' => '',
+        'subtitle' => '',
+        'meta_description' => '',
+        'page_image' => '',
+        'layout' => 'blog.layouts.index',
+        'reverse_direction' => 0,
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +27,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags=Tag::all();
+        return view('admin.tag.index')->withTags($tags);
     }
 
     /**
@@ -26,31 +38,24 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view ('admin.tag.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param TagCreateRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagCreateRequest $request)
     {
-        //
+        $tag=new Tag();
+        foreach (array_keys($this->fields) as $field){
+            $tag->$field=$request->get($field);
+        }
+        $tag->save();
+        return redirect('/admin/tag')->withSuccess("标签'$tag->title'创建成功");
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -59,19 +64,25 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag=Tag::findOrFail($id);
+        return view('admin.tag.edit',$tag);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param TagUpdateRequest|Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagUpdateRequest $request, $id)
     {
-        //
+        $tag=Tag::findOrFail($id);
+        foreach (array_keys(array_except($this->fields,['tag'])) as $field){
+            $tag->$field=$request->get($field);
+        }
+        $tag->save();
+        return redirect('/admin/tag')->withSuccess("标签'$tag->title'修改成功");
     }
 
     /**
@@ -82,6 +93,9 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tag=Tag::findOrFail($id);
+        $tag->delete();
+        return redirect('/admin/tag')
+            ->withSuccess("标签 '$tag->tag' 删除成功");
     }
 }
