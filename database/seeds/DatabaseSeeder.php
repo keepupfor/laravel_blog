@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,8 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
+         $this->call(PostTableSeeder::class);
 
         Model::reguard();
+    }
+}
+class PostTableSeeder extends Seeder
+{
+    public function run()
+    {
+        Post::truncate();
+        factory(Post::class, 20)->create();
     }
 }
