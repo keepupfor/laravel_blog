@@ -6,6 +6,10 @@
  * Time: 9:39
  */
 return [
-  'title'=>'My Blog',
-    'posts_per_page'=>5
+    'title' => 'My Blog',
+    'posts_per_page' => 5,
+    'uploads'=>[
+        'storage'=>'local',
+        'webpath'=>'/uploads'
+    ]
 ];
