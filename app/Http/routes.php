@@ -15,12 +15,12 @@ Route::get('/', function () {
     return redirect('/blog');
 });
 Route::get('blog', 'BlogController@index');
-Route::get('blog/{slug}', 'BlogController@showPost');
+Route::get('blog/{id}', 'BlogController@showPost');
 Route::get('admin', function () {
     return redirect('/admin/post');
 });
 Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function () {
-    Route::resource('admin/post', 'PostController');
+    Route::resource('admin/post', 'PostController', ['except' => 'show']);
     Route::resource('admin/tag', 'TagController', ['except' => 'show']);
     Route::get('admin/upload', 'UploadController@index');
     Route::post('admin/upload/file', 'UploadController@uploadFile');

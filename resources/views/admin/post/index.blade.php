@@ -2,19 +2,74 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Posts</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        TODO
-
-                    </div>
-                </div>
+        <div class="row page-title-row">
+            <div class="col-md-6">
+                <h3>文章 <small>» 列表</small></h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/admin/post/create" class="btn btn-success btn-md">
+                    <i class="fa fa-plus-circle"></i> 新建文章
+                </a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                @include('admin.partials.errors')
+                @include('admin.partials.success')
+
+                <table id="posts-table" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>发布时间</th>
+                        <th>标题</th>
+                        <th>别称</th>
+                        <th data-sortable="false">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($posts as $post)
+                        <tr>
+                            <td data-order="{{ $post->published_at->timestamp }}">
+                                {{ $post->published_at->format('Y-m-d H:i:s') }}
+                            </td>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->subtitle }}</td>
+                            <td>
+                                <a href="/admin/post/{{ $post->id }}/edit" class="btn btn-xs btn-info">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <a href="/blog/{{ $post->id }}" class="btn btn-xs btn-warning">
+                                    <i class="fa fa-eye"></i> 预览
+                                </a>
+                                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
+                                        data-target="#modal-delete"
+                                        onclick="delete_post({{ $post->id }})">
+                                    <i class="fa fa-times-circle"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
+@stop
+
+@section('scripts')
+    <script>
+        $(function() {
+            $("#posts-table").DataTable({
+                order: [[0, "desc"]]
+            });
+        });
+        function delete_post(id) {
+            $("#delete_form").removeAttr('action');
+            $("#delete_form").attr('action', "/admin/post/" + id);
+        }
+    </script>
 @stop

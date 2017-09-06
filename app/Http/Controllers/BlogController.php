@@ -19,9 +19,9 @@ class BlogController extends Controller
 
         return view('blog.index', compact('posts'));
     }
-    public function showPost($slug)
+    public function showPost($id)
     {
-        $post=Post::whereSlug($slug)->firstOrFail();
+        $post=Post::findOrFail($id);
         return view('blog.post')->withPost($post);
     }
 }

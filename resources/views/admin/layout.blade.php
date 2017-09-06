@@ -49,7 +49,7 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    确定要删除这条标签吗?
+                    确定要删除吗?
                 </p>
             </div>
             <div class="modal-footer">

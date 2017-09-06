@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Jobs\PostFormFields;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.post.index');
+        return view('admin.post.index')
+            ->withPosts(Post::all());
     }
 
     /**
@@ -26,18 +31,22 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $data=$this->dispatch(new PostFormFields());
+        return view('admin.post.create',$data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  PostCreateRequest $request
+     *
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        //
+        $post=Post::create($request->postFillData());
+        $post->syncTags($request->get('tags',[]));
+        return redirect()->route('admin.post.index')
+            ->withSuccess('文章创建成功！');
     }
 
     /**
@@ -59,19 +68,28 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data=$this->dispatch(new PostFormFields($id));
+        return view('admin.post.edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  PostUpdateRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
-        //
+        $post=Post::findOrFail($id);
+        $post->fill($request->postFillData());
+        $post->save();
+        $post->syncTags($request->get('tags',[]));
+        if ($request->action='continue')
+        {
+            return redirect()->back()->withSuccess('文章保存成功!');
+        }
+        return redirect()->route('admin.post.index')->withSuccess('文章保存成功!');
     }
 
     /**
@@ -82,6 +100,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post=Post::findOrFail($id);
+        $post->tags()->detach();
+        $post->delete();
+        return redirect()->route('admin.post.index')->withSuccess('文章删除成功!');;
     }
 }
