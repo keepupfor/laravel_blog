@@ -8,8 +8,13 @@
 return [
     'title' => 'My Blog',
     'posts_per_page' => 5,
+    'name'=>'My Blog',
+    'subtitle'=>'http://namexdblog.herokuapp.com',
+    'description' => ' 用Laravel开发博客系统',
+    'author' => 'NeverMore',
+    'page_image' => 'home-bg.jpg',
     'uploads'=>[
         'storage'=>'local',
-        'webpath'=>'/uploads'
+        'webpath'=>'/uploads/'
     ]
 ];

@@ -38,7 +38,12 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view ('admin.tag.create');
+        $data = [];
+        foreach ($this->fields as $field => $default) {
+            $data[$field] = old($field, $default);
+        }
+
+        return view('admin.tag.create', $data);
     }
 
     /**
