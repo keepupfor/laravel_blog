@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Services\RssFeed;
+use App\Services\SiteMap;
 class BlogController extends Controller
 {
     public function index(Request $request)
@@ -26,11 +27,24 @@ class BlogController extends Controller
     {
 
         $post = Post::with('tags')->findOrFail($id);
+        $slug=$post['slug'];
         $tag=$request->get('tag');
         if ($tag)
         {
             $tag=Tag::whereTag($tag)->firstOrFail();
         }
-        return view($post->layout,compact('post','tag'));
+        return view($post->layout,compact('post','tag','slug'));
+    }
+    public function rss(RssFeed $feed)
+    {
+        $rss=$feed->getRSS();
+        return response($rss)
+            ->header('Content-type', 'application/rss+xml');
+    }
+    public function siteMap(SiteMap $siteMap)
+    {
+        $map=$siteMap->getSiteMap();
+        return response($map)
+            ->header('Content-type', 'text/xml');
     }
 }
