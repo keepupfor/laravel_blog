@@ -13,6 +13,7 @@ return [
     'description' => ' 用Laravel开发博客系统',
     'author' => 'NeverMore',
     'page_image' => 'home-bg.jpg',
+    'contact_email'=>'458103210@qq.com',
     'uploads'=>[
         'storage'=>'local',
         'webpath'=>'/uploads/'
