@@ -23,7 +23,7 @@ Route::get('sitemap.xml', 'BlogController@siteMap');
 Route::get('admin', function () {
     return redirect('/admin/post');
 });
-Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function () {
     Route::resource('admin/post', 'PostController', ['except' => 'show']);
     Route::resource('admin/tag', 'TagController', ['except' => 'show']);
     Route::get('admin/upload', 'UploadController@index');
