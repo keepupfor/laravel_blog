@@ -23,7 +23,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'post_tag_pivot');
+        return $this->belongsToMany('App\Models\Tag', 'post_tag_pivot')->withTimestamps();
     }
 
     protected function setUniqueSlug($title, $extra)
@@ -58,7 +58,7 @@ class Post extends Model
      */
     public function getPublishDateAttribute($value)
     {
-        return $this->published_at->format('M-j-Y');
+        return $this->published_at->format('Y-m-d');
     }
 
     /**
@@ -66,7 +66,7 @@ class Post extends Model
      */
     public function getPublishTimeAttribute($value)
     {
-        return $this->published_at->format('g:i A');
+        return $this->published_at->format('H:i:s');
     }
 
     /**
