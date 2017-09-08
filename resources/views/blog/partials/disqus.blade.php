@@ -1,7 +1,7 @@
 <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        this.page.url = 'http://blog.app/blog/{{ $slug }}';
+        this.page.url = 'http://namexdblog.herokuapp.com/blog/{{ $slug }}';
         this.page.identifier = 'blog-{{ $slug }}';
     };
     (function() { // DON'T EDIT BELOW THIS LINE
