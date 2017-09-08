@@ -60,10 +60,10 @@
     <script>
         $(function() {
             $("#publish_date").pickadate({
-                format: "Y-m-d"
+                format: "yyyy-mm-dd"
             });
             $("#publish_time").pickatime({
-                format: "h:i:s"
+                format: "H:i"
             });
             $("#tags").selectize({
                 create: true
