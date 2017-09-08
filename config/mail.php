@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.163.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => env('MAIL_FROM','458103210@qq.com'), 'name' => env('MAIL_NAME','NeverMore')],
+    'from' => ['address' => env('MAIL_FROM','namexd@163.com'), 'name' => env('MAIL_NAME','NeverMore')],
 
     /*
     |--------------------------------------------------------------------------

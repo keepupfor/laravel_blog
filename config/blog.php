@@ -14,7 +14,7 @@ return [
     'author' => 'NeverMore',
     'page_image' => 'home-bg.jpg',
     'rss_size' => 25,
-    'contact_email'=>'458103210@qq.com',
+    'contact_email'=>'namexd@163.com',
     'uploads'=>[
         'storage'=>'local',
         'webpath'=>'/uploads/'
