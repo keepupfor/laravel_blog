@@ -112,9 +112,7 @@
                 介绍
             </label>
             <div class="col-md-8">
-                <textarea class="form-control" name="meta_description" id="meta_description" rows="6">
-                    {{ $meta_description }}
-                </textarea>
+                <textarea class="form-control" name="meta_description" id="meta_description" rows="6">{{ $meta_description }}</textarea>
             </div>
         </div>
 
