@@ -33,7 +33,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {!! $post->content_html !!}
+                    {!! $post->content_raw !!}
                 </div>
             </div>
         </div>
@@ -48,14 +48,14 @@
                         <li class="previous">
                             <a href="{!! $post->olderPost($tag)->url($tag) !!}">
                                 <i class="fa fa-long-arrow-left fa-lg"></i>
-                                Previous {{ $tag->tag }} Post
+                                上一篇 {{ $tag->tag }} 文章
                             </a>
                         </li>
                     @endif
                     @if ($post->newerPost($tag))
                         <li class="next">
                             <a href="{!! $post->newerPost($tag)->url($tag) !!}">
-                                Next {{ $tag->tag }} Post
+                                下一篇 {{ $tag->tag }} 文章
                                 <i class="fa fa-long-arrow-right"></i>
                             </a>
                         </li>
@@ -65,14 +65,14 @@
                         <li class="previous">
                             <a href="{!! $post->newerPost($tag)->url($tag) !!}">
                                 <i class="fa fa-long-arrow-left fa-lg"></i>
-                                Next Newer {{ $tag ? $tag->tag : '' }} Post
+                                下一篇更新的 {{ $tag ? $tag->tag : '' }} 文章
                             </a>
                         </li>
                     @endif
                     @if ($post->olderPost($tag))
                         <li class="next">
                             <a href="{!! $post->olderPost($tag)->url($tag) !!}">
-                                Next Older {{ $tag ? $tag->tag : '' }} Post
+                                下一篇更老的 {{ $tag ? $tag->tag : '' }} 文章
                                 <i class="fa fa-long-arrow-right"></i>
                             </a>
                         </li>
